@@ -11,3 +11,7 @@ infix (">>=");
 /* naive version is not working :D, this better one is inspired */
 /* to pop macro in basic.mac */
 backpop(l)::=(symbolcheck(l),buildq([l],prog1(last(l),l:rest(l, -1))));
+
+/* this is a partial order over the rows length of a tableau */
+/* maybe we should check if lengthlessp is a partial order */
+lengthlessp (l1, l2) := (length (l1) < length (l2));
