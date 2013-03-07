@@ -1,0 +1,13 @@
+infix (">>=");
+
+">>=" (e,l) := if listp (l) then block (
+  if emptyp (l) then true
+  else return (e >= last (sort (l, 'orderlessp))))
+  else error ("second operand should be a list");
+
+/* naive bottom pop */
+/* no check for bad input */
+/* backpop (l) := block (last (l), l:rest (l, -1)) */
+/* naive version is not working :D, this better one is inspired */
+/* to pop macro in basic.mac */
+backpop(l)::=(symbolcheck(l),buildq([l],prog1(last(l),l:rest(l, -1))));

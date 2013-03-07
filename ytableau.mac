@@ -1,0 +1,25 @@
+/* we need pop and push functions */
+load (basic); /* would be nice to check if it's already loaded */
+load ("~/Sources/tesi/utils.mac");
+
+/* let's check if the list w is a suitable word for any tableau */
+ytableauwordp (w) :=
+if listp (w) then block (
+  rows : makelist (),
+  for i:1 unless emptyp (w) do block (
+    top : pop (w),
+    /* errcatch returns an empty list in case of error, so */
+    /* if some rows exist we get the list containing a list which represents */
+    /* the last row, if rows is empty we get an empty list (i.e. a new row!) */
+    lastrow : errcatch (backpop (rows)),
+    print (lastrow),
+    if not emptyp (lastrow) then lastrow : first (lastrow),
+    print (lastrow),
+    if top >>= lastrow then block (
+      lastrow : append (lastrow, makelist (top)),
+      rows : append (rows, makelist (lastrow)))
+    else block (
+      rows : append (rows, makelist (lastrow)),
+      rows : append (rows, makelist (makelist (top))))),
+  rows
+) else false;
