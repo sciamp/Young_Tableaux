@@ -2,7 +2,7 @@
 load (basic); /* would be nice to check if it's already loaded */
 load ("~/Sources/tesi/utils.mac");
 
-/* let's check if the list w is a suitable word for any tableau */
+/* let's check if the list w is a suitable word for some tableau */
 ytableauwordp (w) :=
 if listp (w) then block (
   rows : makelist (),
@@ -12,14 +12,15 @@ if listp (w) then block (
     /* if some rows exist we get the list containing a list which represents */
     /* the last row, if rows is empty we get an empty list (i.e. a new row!) */
     lastrow : errcatch (backpop (rows)),
-    print (lastrow),
+    /* print (lastrow), */
     if not emptyp (lastrow) then lastrow : first (lastrow),
-    print (lastrow),
+    /* print (lastrow), */
     if top >>= lastrow then block (
       lastrow : append (lastrow, makelist (top)),
       rows : append (rows, makelist (lastrow)))
     else block (
       rows : append (rows, makelist (lastrow)),
       rows : append (rows, makelist (makelist (top))))),
-  rows
+  if rows = sort (rows, 'lengthlessp) then rows
+  else false
 ) else false;
