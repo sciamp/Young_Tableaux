@@ -1,10 +1,12 @@
+load ("~/Sources/tesi/ydiagram.mac");
+load ("~/Sources/tesi/ytableau.mac");
+
 infix ("li=");
 
 "li=" (ll,l) := block (
   ret : true,
   for i : 1 thru length (l) do if length (ll[i]) # l[i] then ret : false,
   return (ret));
-
 
 /* we should check if 't' is a Tableau, and 'd' is a Diagram */
 yshapep (t,d) := block (

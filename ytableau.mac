@@ -32,3 +32,12 @@ if listp (w) then block (
   if rows = sort (rows, 'lengthlessp) then rows
   else false
 ) else false;
+
+ytableaup (t) :=
+if listp (t@word) then block (
+  l : makelist (),
+  for i : 1 thru length (t@word) do
+  if listp (t@word[i]) then l : append (l, t@word[i]),
+  w : ytableauwordp (l),
+  if listp (w) then return (true))
+else false;
