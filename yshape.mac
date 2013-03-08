@@ -1,0 +1,7 @@
+/* we should check if 't' is a Tableau, and 'd' is a Diagram */
+yshapep (t,d) :=
+if length (t@word) = length (d@rows) then block (
+  for i:1 thru length (t@word) do block (
+    if length (t@word[i]) # d@rows[i] then return (false)),
+  return (true))
+else return (false);
