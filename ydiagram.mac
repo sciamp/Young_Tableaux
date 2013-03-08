@@ -4,6 +4,4 @@ new_ydiagram_safe (l) := block (
   yd : new (ydiagram (sort (l, 'orderlessp))),
   return (yd));
 
-/* ydiagramp (d) :=  */
-
-/* yd : new (ydiagram ([6,5,3,3,2,2])); */
+ydiagramp (d) := listp (d@rows) and d@rows = sort (d@rows, 'orderlessp);
