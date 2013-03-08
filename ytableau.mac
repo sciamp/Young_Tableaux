@@ -2,6 +2,14 @@
 load (basic); /* would be nice to check if it's already loaded */
 load ("~/Sources/tesi/utils.mac");
 
+defstruct (ytableau (word));
+
+new_ytableau_safe (l) := block (
+  w : ytableauwordp (l),
+  yt : false,
+  if listp (w) then yt : new (ytableau (w)),
+  yt);
+
 /* let's check if the list w is a suitable word for some tableau */
 ytableauwordp (w) :=
 if listp (w) then block (
