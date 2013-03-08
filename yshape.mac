@@ -8,8 +8,9 @@ infix ("li=");
   for i : 1 thru length (l) do if length (ll[i]) # l[i] then ret : false,
   return (ret));
 
-/* we should check if 't' is a Tableau, and 'd' is a Diagram */
-yshapep (t,d) := block (
+yshapep (t,d) :=
+if (ydiagramp (d) and ytableaup (t)) then block (
   ret : false,
   if (length (t@word) = length (d@rows)) and (t@word li= d@rows) then ret : true,
-  return (ret));
+  return (ret))
+else false;
