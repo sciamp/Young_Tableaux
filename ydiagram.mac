@@ -1,7 +1,7 @@
 defstruct (ydiagram (rows));
 
 new_ydiagram_safe (l) := block (
-  yd : new (ydiagram (sort (l, 'ordergreatp))),
+  yd : new (ydiagram (sort (l, 'orderlessp))),
   return (yd));
 
 /* ydiagramp (d) :=  */
