@@ -1,7 +1,13 @@
+infix ("li=");
+
+"li=" (ll,l) := block (
+  ret : true,
+  for i : 1 thru length (l) do if length (ll[i]) # l[i] then ret : false,
+  return (ret));
+
+
 /* we should check if 't' is a Tableau, and 'd' is a Diagram */
-yshapep (t,d) :=
-if length (t@word) = length (d@rows) then block (
-  for i:1 thru length (t@word) do block (
-    if length (t@word[i]) # d@rows[i] then return (false)),
-  return (true))
-else return (false);
+yshapep (t,d) := block (
+  ret : false,
+  if (length (t@word) = length (d@rows)) and (t@word li= d@rows) then ret : true,
+  return (ret));
