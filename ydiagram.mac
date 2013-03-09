@@ -15,4 +15,5 @@ ydiagram_transpose (d) := block (
     rows : delete (n, rows, cols),
     rows : rows-1,
     for j : 1 thru n do push (cols, tdl)),
-  return (tdl));
+  td : new_ydiagram_safe (tdl),
+  return (td));
