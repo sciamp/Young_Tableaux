@@ -5,3 +5,14 @@ new_ydiagram_safe (l) := block (
   return (yd));
 
 ydiagramp (d) := listp (d@rows) and d@rows = sort (d@rows, 'orderlessp);
+
+ydiagram_transpose (d) := block (
+  tdl : makelist (),
+  rows : d@rows,
+  for i : 1 unless emptyp (rows) do block (
+    cols : length (rows),
+    n : pop (rows),
+    rows : delete (n, rows, cols),
+    rows : rows-1,
+    for j : 1 thru n do push (cols, tdl)),
+  return (tdl));
