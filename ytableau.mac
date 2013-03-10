@@ -41,3 +41,16 @@ if listp (t@word) then block (
   w : ytableauwordp (l),
   if listp (w) then return (true))
 else false;
+
+ytableau_bump (T, x) := block (
+  for i : length (T@word) step -1 thru 1 do block (
+    bumped : false, 
+    if x < last (T@word[i]) then
+    for j : 1 unless (j>length (T@word[i])) or bumped do
+    if x < (T@word[i])[j] then block (
+      tmp : x,
+      x : (T@word[i])[j],
+      (T@word[i])[j] : tmp,
+      bumped : true)),
+  w : T@word,
+  T@word : push ([x], w));
