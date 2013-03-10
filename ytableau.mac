@@ -60,3 +60,10 @@ ytableau_bump (T, x) := block (
     w : T@word,
     T@word : push ([x], w)),
   return (T));
+
+ytableaux_product (T,U) := block (
+  /* WARNING! R : T creates a reference to T, not a copy! */
+  R : new (ytableau (copylist (T@word))), /* we return a new tableau R = T*U */
+  for i : 1 thru length (U@word) do
+  for j : 1 thru length (U@word[i]) do ytableau_bump (R, U@word[i][j]),
+  return (R));
