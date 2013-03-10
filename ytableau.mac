@@ -44,13 +44,19 @@ else false;
 
 ytableau_bump (T, x) := block (
   for i : length (T@word) step -1 thru 1 do block (
-    bumped : false, 
-    if x < last (T@word[i]) then
-    for j : 1 unless (j>length (T@word[i])) or bumped do
-    if x < (T@word[i])[j] then block (
-      tmp : x,
-      x : (T@word[i])[j],
-      (T@word[i])[j] : tmp,
-      bumped : true)),
-  w : T@word,
-  T@word : push ([x], w));
+    bumped : false,
+    appended : false,
+    if x < last (T@word[i]) then block (
+      for j : 1 unless (j>length (T@word[i])) or bumped do
+      if x < (T@word[i])[j] then block (
+        tmp : x,
+        x : (T@word[i])[j],
+        (T@word[i])[j] : tmp,
+        bumped : true))
+    else block (
+      T@word[i] : append (T@word[i], [x]),
+      appended : true)),
+  if not appended then block ( 
+    w : T@word,
+    T@word : push ([x], w)),
+  return (T));
