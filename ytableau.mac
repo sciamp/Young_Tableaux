@@ -43,9 +43,9 @@ if listp (t@word) then block (
 else false;
 
 ytableau_bump (T, x) := block (
-  for i : length (T@word) step -1 thru 1 do block (
+  appended : false,
+  for i : length (T@word) step -1 while (i > 0 and not appended) do block (
     bumped : false,
-    appended : false,
     if x < last (T@word[i]) then block (
       for j : 1 unless (j>length (T@word[i])) or bumped do
       if x < (T@word[i])[j] then block (
