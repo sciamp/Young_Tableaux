@@ -1,5 +1,6 @@
 infix (">>=");
 
+/* true if e is bigger than every element of l */
 ">>=" (e,l) := if listp (l) then block (
   if emptyp (l) then true
   else return (e >= last (sort (l, 'orderlessp))))
