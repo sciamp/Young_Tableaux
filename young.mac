@@ -1,0 +1,5 @@
+load (basic); /* we need pop */
+load ("utils.mac");
+load ("yshape.mac");
+load ("ydiagram.mac");
+load ("ytableau.mac");

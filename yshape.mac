@@ -1,6 +1,3 @@
-load ("~/Sources/tesi/ydiagram.mac");
-load ("~/Sources/tesi/ytableau.mac");
-
 infix ("li=");
 
 "li=" (ll,l) := block (
