@@ -1,0 +1,9 @@
+/* given a tableau T (i.e. a filling T of a diagram λ) returns */
+/* the corresponding Schur monomial */
+yschur_monomial (T) := block (
+  mon : 1,
+  /*each (lambda ([l], each (lambda ([i], mon : mon*x[i]), l)), T@word),*/
+  for i : 1 thru length (T@word) do block (
+    for j : 1 thru length ((T@word)[i]) do block (
+      mon : mon*x[(T@word[i])[j]])),
+  return (mon));

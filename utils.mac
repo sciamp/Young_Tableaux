@@ -22,10 +22,12 @@
 infix (">>=");
 
 /* true if e is bigger than every element of l */
-">>=" (e,l) := if listp (l) then block (
-  if emptyp (l) then true
-  else return (e >= last (sort (l, 'orderlessp))))
-  else error ("second operand should be a list");
+ /* ">>=" (e,l) := if listp (l) then block ( */
+ /*  if emptyp (l) then true */
+ /*  else return (e >= last (sort (l, 'orderlessp)))) */
+ /*  else error ("second operand should be a list"); */
+
+">>=" (e,l) := every (lambda ([x], x <= e), l);
 
 /* naive bottom pop */
 /* no check for bad input */
@@ -37,3 +39,17 @@ backpop(l)::=(symbolcheck(l),buildq([l],prog1(last(l),l:rest(l, -1))));
 /* this is a partial order over the rows length of a tableau */
 /* maybe we should check if lengthlessp is a partial order */
 lengthlessp (l1, l2) := (length (l1) < length (l2));
+
+/* apply a function on each element of the list */
+each (func, l) := for i : 1 thru length (l) do apply (func, l[i]);
+
+/* Given a word (of fixed length n) in the alphabet {1,2,...,m} of */
+/* integers returns the next one in the lexicographical order. */
+/* If the given word is the last one (i.e. [m,m,...,m]) returns [1,1,...,1] */
+next_lex_word (l, n, m) :=
+if n > 0 then block (
+  if l[n] < m then l[n] : l[n]+1
+  else block (
+    l[n] : 1,
+    l : next_lex_word (l, n-1, m)))
+else return (l);
