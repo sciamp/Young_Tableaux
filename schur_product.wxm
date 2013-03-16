@@ -1,0 +1,169 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 12.09.0 ] */
+
+/* [wxMaxima: input   start ] */
+file_search_maxima : cons(sconcat("/home/sciamp/Sources/tesi/###.{lisp,mac,mc}"), file_search_maxima)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+load (young);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+d1 : new_ydiagram_safe ([1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+d2 : new_ydiagram_safe ([2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+p1 : yschur_polynomial (d1,4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+p2 : yschur_polynomial (d2,4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+p1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+p2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ expand (p1*p2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D1 : new_ydiagram_safe ([3]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+D2 : new_ydiagram_safe ([2,1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+P1 : yschur_polynomial (D1, 4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+P2 : yschur_polynomial (D2, 4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+p1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+p2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+P1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+P2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+t1 : expand (p1*p2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+t2 : expand (P1+P2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+is (t1 = t2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dd1 : new_ydiagram_safe ([2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+dd2 : new_ydiagram_safe ([1,1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+pp1 : yschur_polynomial (dd1,4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+pp2 : yschur_polynomial (dd2,4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+pp1;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+pp2;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+tt1 : expand (pp1*pp2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+DD1 : new_ydiagram_safe ([4]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+DD2 : new_ydiagram_safe ([3,1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+DD3 : new_ydiagram_safe ([2,2]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+DD4 : new_ydiagram_safe ([1,1,1,1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+DD5 : new_ydiagram_safe ([2,1,1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+PP1 : yschur_polynomial (DD1,4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+PP2 : yschur_polynomial (DD2,4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+PP3 : yschur_polynomial (DD3,4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+PP4 : yschur_polynomial (DD4,4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+PP5 : yschur_polynomial (DD5,4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+TT1 : expand (PP1+3*PP2+3*PP3+PP4+3*PP5);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+TT2 : expand (PP1+PP2+PP3+PP4+PP5);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+tt1 : expand (pp1*pp2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+is (TT2=tt1);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
