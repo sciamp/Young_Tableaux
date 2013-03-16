@@ -7,3 +7,20 @@ yschur_monomial (T) := block (
     for j : 1 thru length ((T@word)[i]) do block (
       mon : mon*x[(T@word[i])[j]])),
   return (mon));
+
+/* Given a young diagram D and an alphabet {1,...,m} returns the */
+/* corresponding Schur polynomial */
+yschur_polynomial (D, m) := block (
+  pol : 0,
+  n : ydiagram_size (D),
+  lang_size : m^n,
+  w : makelist (1, n),
+  for i : 1 thru lang_size do block (
+    print (i,"->",w),
+    t : new_ytableau_safe (w),
+    print ("same shape? ",yshapep (t,D)),
+    if yshapep (t,D) then block (
+      pol : pol + yschur_monomial(t),
+      print ("same shape ", t, " ", d)),
+    w : next_lex_word (w, n, m)),
+  return (pol));
