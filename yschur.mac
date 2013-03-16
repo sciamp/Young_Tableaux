@@ -42,6 +42,6 @@ yschur_polynomial (D, m) := block (
     print ("same shape? ",yshapep (t,D)),
     if yshapep (t,D) then block (
       pol : pol + yschur_monomial(t),
-      print ("same shape ", t, " ", d)),
+      print ("same shape ", t, " ", D)),
     w : next_lex_word (w, n, m)),
   return (pol));
