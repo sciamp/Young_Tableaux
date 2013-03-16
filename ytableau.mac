@@ -22,6 +22,7 @@
 defstruct (ytableau (word));
 
 new_ytableau_safe (l) := block (
+  [w],
   w : ytableauwordp (l),
   yt : false,
   if listp (w) then yt : new (ytableau (w)),
@@ -52,6 +53,7 @@ if listp (w) then block (
 
 ytableaup (t) :=
 if listp (t@word) then block (
+  [l,w],
   l : makelist (),
   for i : 1 thru length (t@word) do
   if listp (t@word[i]) then l : append (l, t@word[i]),
