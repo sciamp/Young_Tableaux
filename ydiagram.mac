@@ -38,3 +38,8 @@ ydiagram_transpose (d) := block (
     for j : 1 thru n do push (cols, tdl)),
   td : new_ydiagram_safe (tdl),
   return (td));
+
+ydiagram_size (d) := block (
+  size : 0,
+  for i : 1 thru length (d@rows) do size : size+d@rows[i],
+  return (size));
