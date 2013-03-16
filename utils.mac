@@ -48,7 +48,9 @@ each (func, l) := for i : 1 thru length (l) do apply (func, l[i]);
 /* If the given word is the last one (i.e. [m,m,...,m]) returns [1,1,...,1] */
 next_lex_word (l, n, m) :=
 if n > 0 then block (
-  if l[n] < m then l[n] : l[n]+1
+  if l[n] < m then block (
+    l[n] : l[n]+1,
+    return (l))
   else block (
     l[n] : 1,
     l : next_lex_word (l, n-1, m)))
