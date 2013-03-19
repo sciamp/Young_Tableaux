@@ -22,6 +22,7 @@
 /* given a tableau T (i.e. a filling T of a diagram λ) returns */
 /* the corresponding Schur monomial */
 yschur_monomial (T) := block (
+  [mon],
   mon : 1,
   /*each (lambda ([l], each (lambda ([i], mon : mon*x[i]), l)), T@word),*/
   for i : 1 thru length (T@word) do block (
@@ -32,6 +33,7 @@ yschur_monomial (T) := block (
 /* Given a young diagram D and an alphabet {1,...,m} returns the */
 /* corresponding Schur polynomial */
 yschur_polynomial (D, m) := block (
+  [pol,n,w,t],
   pol : 0,
   n : ydiagram_size (D),
   lang_size : m^n,
