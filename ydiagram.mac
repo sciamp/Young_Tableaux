@@ -22,6 +22,7 @@
 defstruct (ydiagram (rows));
 
 new_ydiagram_safe (l) := block (
+  [yd],
   yd : new (ydiagram (sort (l, 'orderlessp))),
   return (yd));
 
@@ -41,6 +42,7 @@ ydiagram_transpose (d) := block (
   return (td));
 
 ydiagram_size (d) := block (
+  [size],
   size : 0,
   for i : 1 thru length (d@rows) do size : size+d@rows[i],
   return (size));
