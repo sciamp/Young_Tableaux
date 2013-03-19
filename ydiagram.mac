@@ -28,18 +28,32 @@ new_ydiagram_safe (l) := block (
 
 ydiagramp (d) := listp (d@rows) and d@rows = sort (d@rows, 'orderlessp);
 
-ydiagram_transpose (d) := block (
-  [tdl,rows,n,td,cols],
-  tdl : makelist (),
-  rows : d@rows,
-  for i : 1 unless emptyp (rows) do block (
-    cols : length (rows),
-    n : pop (rows),
-    rows : delete (n, rows, cols),
-    rows : rows-1,
-    for j : 1 thru n do push (cols, tdl)),
-  td : new_ydiagram_safe (tdl),
-  return (td));
+/* ydiagram_transpose (d) := block ( */
+/*   [tdl,rows,n,td,cols], */
+/*   tdl : makelist (), */
+/*   rows : d@rows, */
+/*   for i : 1 unless emptyp (rows) do block ( */
+/*     cols : length (rows), */
+/*     n : pop (rows), */
+/*     rows : delete (n, rows, cols), */
+/*     rows : rows-1, */
+/*     for j : 1 thru n do push (cols, tdl)), */
+/*   td : new_ydiagram_safe (tdl), */
+/*   return (td)); */
+
+remove_column (r, l) := 
+if emptyp (r) then return (l)
+else block (
+  l : append ([length (r)], l),
+  r : r-1,
+  r : delete (0, r),
+  return (remove_column (r, l)));
+
+ydiagram_transpose (D) := block (
+  [l,r],
+  r : D@rows,
+  l : remove_column (r, []),
+  return (new_ydiagram_safe (l)));
 
 ydiagram_size (d) := block (
   [size],
