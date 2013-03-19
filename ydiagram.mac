@@ -41,13 +41,13 @@ ydiagramp (d) := listp (d@rows) and d@rows = sort (d@rows, 'orderlessp);
 /*   td : new_ydiagram_safe (tdl), */
 /*   return (td)); */
 
-remove_column (r, l) := 
+remove_diagram_column (r, l) := 
 if emptyp (r) then return (l)
 else block (
   l : append ([length (r)], l),
   r : r-1,
   r : delete (0, r),
-  return (remove_column (r, l)));
+  return (remove_diagram_column (r, l)));
 
 ydiagram_transpose (D) := block (
   [l,r],
