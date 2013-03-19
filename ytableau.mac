@@ -86,3 +86,17 @@ ytableaux_product (T,U) := block (
   for i : 1 thru length (U@word) do
   for j : 1 thru length (U@word[i]) do ytableau_bump (R, U@word[i][j]),
   return (R));
+
+/* The transpose of a tableau need not to be a tableau, so we're */
+/* using simple lists instead of tableaux. Input list should be */
+/* a list of lists. */
+remove_tableau_column (t, l) :=
+if emptyp (t) then return (l)
+else block (
+  [current_line, next_t],
+  current_line : reverse (maplist (lambda ([x], first (x)), t)),
+  next_t : maplist (lambda ([x], rest (x, 1)), t),
+  next_t : delete ([], next_t),
+  return (remove_tableau_column (next_t, append ([current_line], l))));
+
+ytableau_transpose (T) := remove_tableau_column (T@word, []); 
