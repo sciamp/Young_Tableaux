@@ -29,7 +29,7 @@ new_ydiagram_safe (l) := block (
 ydiagramp (d) := listp (d@rows) and d@rows = sort (d@rows, 'orderlessp);
 
 ydiagram_transpose (d) := block (
-  [tdl,rows,n,td],
+  [tdl,rows,n,td,cols],
   tdl : makelist (),
   rows : d@rows,
   for i : 1 unless emptyp (rows) do block (
