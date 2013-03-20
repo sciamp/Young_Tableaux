@@ -56,9 +56,7 @@ fill_line (len, m, ts) := block (
   [],
   if (len = 0) then return (ts)
   else block (
-    [fl,cl],
-    cl : [],
-    step_size : length (first (ts))+1,
-    fl : flatten (makelist (makelist (append (x, [y]), y, last_or_zero (x) + 1, m - len + 1), x, ts)),
-    for i : 1 step step_size while (i <= length (fl)) do cl : append (cl, [makelist (fl[z],z,i,i+step_size-1)]),
-    return (fill_line (len - 1, m, cl))));
+    [p],
+    p : [],
+    for x in ts do p:append (p, makelist (append (x, [y]), y, last_or_zero (x) + 1, m - len + 1)),
+    return (fill_line (len - 1, m, p))));
