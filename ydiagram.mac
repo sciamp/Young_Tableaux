@@ -52,7 +52,7 @@ else block (
 ydiagram_transpose (D) := block (
   [l,r],
   r : D@rows,
-  l : remove_column (r, []),
+  l : remove_diagram_column (r, []),
   return (new_ydiagram_safe (l)));
 
 ydiagram_size (d) := block (
