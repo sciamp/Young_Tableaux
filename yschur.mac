@@ -32,6 +32,7 @@ yschur_monomial (T) := block (
 
 /* Given a young diagram D and an alphabet {1,...,m} returns the */
 /* corresponding Schur polynomial */
+/* naive version */
 yschur_polynomial (D, m) := block (
   [pol,n,w,t],
   pol : 0,
@@ -39,11 +40,25 @@ yschur_polynomial (D, m) := block (
   lang_size : m^n,
   w : makelist (1, n),
   for i : 1 thru lang_size do block (
-    print (i,"->",w),
+    /* print (i,"->",w), */
     t : new_ytableau_safe (w),
-    print ("same shape? ",yshapep (t,D)),
+    /* print ("same shape? ",yshapep (t,D)), */
     if yshapep (t,D) then block (
-      pol : pol + yschur_monomial(t),
-      print ("same shape ", t, " ", D)),
+      pol : pol + yschur_monomial(t)),
+      /* print ("same shape ", t, " ", D)), */
     w : next_lex_word (w, n, m)),
   return (pol));
+
+/* better one */
+last_or_zero (l) := if emptyp (l) then 0 else last(l);
+
+fill_line (len, m, ts) := block (
+  [],
+  if (len = 0) then return (ts)
+  else block (
+    [fl,cl],
+    cl : [],
+    step_size : length (first (ts))+1,
+    fl : flatten (makelist (makelist (append (x, [y]), y, last_or_zero (x) + 1, m - len + 1), x, ts)),
+    for i : 1 step step_size while (i <= length (fl)) do cl : append (cl, [makelist (fl[z],z,i,i+step_size-1)]),
+    return (fill_line (len - 1, m, cl))));
