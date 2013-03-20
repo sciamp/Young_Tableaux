@@ -95,3 +95,9 @@ list_transposed_ytableaux (shape, level, m, ts) := block (
       ts : append (ts, nts),
       if every (lambda ([x], is (length (flatten (x)) = length (flatten (first (ts))))), ts) then level : (level + 1),
       return (list_transposed_ytableaux (shape, level, m, ts)))));
+
+list_ytableaux (d, m) := block (
+  [tts, reversed_shape],
+  reversed_shape : reverse (d@rows),
+  tts : list_transposed_ytableaux (reversed_shape, 0, m, [[]]),
+  return (map (lambda ([x], remove_tableau_column (x, [])), tts)));
