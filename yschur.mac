@@ -52,11 +52,45 @@ yschur_polynomial (D, m) := block (
 /* better one */
 last_or_zero (l) := if emptyp (l) then 0 else last(l);
 
-fill_line (len, m, ts) := block (
+fill_line (len, m, ls) := block (
   [],
-  if (len = 0) then return (ts)
+  if (len = 0) then return (ls)
   else block (
     [p],
     p : [],
-    for x in ts do p:append (p, makelist (append (x, [y]), y, last_or_zero (x) + 1, m - len + 1)),
+    for x in ls do p : append (p, makelist (append (x, [y]), y, last_or_zero (x) + 1, m - len + 1)),
     return (fill_line (len - 1, m, p))));
+
+fill_next_line (len, m, prev, ls) := block (
+  [],
+  if (len = 0) then return (ls)
+  else block (
+    [p],
+    p : [],
+    for x in ls do p : append (p,
+      makelist (append (x, [y]), y, max (last_or_zero (x) + 1, prev[length (x)+1]), m - len + 1)),
+    return (fill_next_line (len - 1, m, prev, p))));
+
+/* shape should be rows of Young diagram, actually the conjugate of the diagram */
+/* we are trying to fill list in reversed order */
+/* level should be 0, it is the last level filled. */
+/* ts should be [[]], m is the size of the alphabet. */
+list_transposed_ytableaux (shape, level, m, ts) := block (
+  [],
+  if (level = length (shape)) then return (ts)
+  else block (
+    [],
+    if (level = 0) then return (list_transposed_ytableaux (shape, level + 1, m, fill_line (shape[level + 1], m, ts)))
+    else block (
+      [curr, nls, nts],
+      ts_first : first (ts),
+      ts : delete (ts_first, ts),
+      if listp (first (ts_first)) then curr : first (ts_first)
+      else block (
+        curr : ts_first,
+        ts_first : [ts_first]),
+      nls : fill_next_line (shape [level+1], m, curr, [[]]),
+      nts : map (lambda ([x], append ([x], ts_first)), nls),
+      ts : append (ts, nts),
+      if every (lambda ([x], is (length (flatten (x)) = length (flatten (first (ts))))), ts) then level : (level + 1),
+      return (list_transposed_ytableaux (shape, level, m, ts)))));
