@@ -96,11 +96,13 @@ list_transposed_ytableaux (shape, level, m, ts) := block (
       if emptyp (flatten (ts)) then return ([]),
       ts_first : first (ts),
       ts : delete (ts_first, ts),
-      if listp (first (ts_first)) then curr : first (ts_first)
-      else block (
-        curr : ts_first,
-        ts_first : [ts_first]),
-      nls : fill_next_line (shape [level+1], m, curr, [[]]),
+      /* this was an ugly workaround to bug in fill_line fixed in d67b93d */
+      /* if listp (first (ts_first)) then curr : first (ts_first) */
+      /* else block ( */
+      /*   print ("listp (first (ts_first)) is false"), */
+      /*   curr : ts_first, */
+      /*   ts_first : [ts_first]), */
+      nls : fill_next_line (shape [level+1], m, first (ts_first), [[]]), /* first (ts_first) was curr */
       nts : map (lambda ([x], append ([x], ts_first)), nls),
       ts : append (ts, nts),
       if every (lambda ([x], is (length (flatten (x)) = length (flatten (first (ts))))), ts) then level : (level + 1),
