@@ -28,6 +28,14 @@ yschur_monomial (T) := block (
   for i : 1 thru length (T@word) do block (
     for j : 1 thru length ((T@word)[i]) do block (
       mon : mon*x[(T@word[i])[j]])),
+  return (mon)); 
+
+yschur_monomial_word (w) := block (
+  [mon],
+  mon : 1,
+  for i : 1 thru length (w) do block (
+    for j : 1 thru length (w[i]) do block (
+      mon : mon*x[(w[i])[j]])),
   return (mon));
 
 /* Given a young diagram D and an alphabet {1,...,m} returns the */
@@ -54,12 +62,14 @@ last_or_zero (l) := if emptyp (l) then 0 else last(l);
 
 fill_line (len, m, ls) := block (
   [],
-  if (len = 0) then return (ls)
+  if (len = 0) then return (map (lambda ([x], [x]), ls))
   else block (
-    [p],
-    p : [],
-    for x in ls do p : append (p, makelist (append (x, [y]), y, last_or_zero (x) + 1, m - len + 1)),
-    return (fill_line (len - 1, m, p))));
+    /* [p], */
+    /* p : [], */
+    /* for x in ls do p : append (p, makelist (append (x, [y]), y, last_or_zero (x) + 1, m - len + 1)), */
+    ls : xreduce ('append,
+      makelist (makelist (append (x, [y]), y, last_or_zero (x) + 1, m - len + 1), x, ls)),
+    return (fill_line (len - 1, m, ls))));
 
 fill_next_line (len, m, prev, ls) := block (
   [],
@@ -96,8 +106,18 @@ list_transposed_ytableaux (shape, level, m, ts) := block (
       if every (lambda ([x], is (length (flatten (x)) = length (flatten (first (ts))))), ts) then level : (level + 1),
       return (list_transposed_ytableaux (shape, level, m, ts)))));
 
-list_ytableaux (d, m) := block (
-  [tts, reversed_shape],
-  reversed_shape : reverse (d@rows),
-  tts : list_transposed_ytableaux (reversed_shape, 0, m, [[]]),
-  return (map (lambda ([x], remove_tableau_column (x, [])), tts)));
+/* Schur monomial from a tableau is the same of the one frome the transposed of that tableau */
+better_yschur_polynomial (d, m) := block (
+  [ts, pol, shape],
+  shape : reverse ((ydiagram_transpose (d))@rows),
+  print (shape),
+  ts : list_transposed_ytableaux (shape, 0, m, [[]]),
+  pol : 0,
+  for i : 1 thru length (ts) do pol : pol + yschur_monomial_word (ts[i]),
+  return (pol));
+
+/* list_ytableaux (d, m) := block ( */
+/*   [tts, reversed_shape], */
+/*   reversed_shape : reverse (d@rows), */
+/*   tts : list_transposed_ytableaux (reversed_shape, 0, m, [[]]), */
+/*   return (map (lambda ([x], remove_tableau_column (x, [])), tts))); */
