@@ -38,6 +38,11 @@ yschur_monomial_word (w) := block (
       mon : mon*x[(w[i])[j]])),
   return (mon));
 
+/* i think this could be the best choice, provided a flatten word */
+yschur_monomial_word_recursive (flat_w, mon, i) :=
+if i > 0 then yschur_monomial_word_recursive (flat_w, mon*x[flat_w[i]], i-1)
+else mon;
+
 /* Given a young diagram D and an alphabet {1,...,m} returns the */
 /* corresponding Schur polynomial */
 /* naive version */
