@@ -90,6 +90,7 @@ ytableaux_product (T,U) := block (
 /* The transpose of a tableau need not to be a tableau, so we're */
 /* using simple lists instead of tableaux. Input list should be */
 /* a list of lists. */
+/* l should be [] */
 remove_tableau_column (t, l) :=
 if emptyp (t) then return (l)
 else block (
