@@ -76,6 +76,12 @@ fill_line (len, m, ls) := block (
       makelist (makelist (append (x, [y]), y, last_or_zero (x) + 1, m - len + 1), x, ls)),
     return (fill_line (len - 1, m, ls))));
 
+/* flatten version of fill_line */
+fl_fill_line (len, m, ls) :=
+if len = 0 then ls
+else fl_fill_line (len - 1, m,
+  xreduce ('append, makelist (makelist (append (x, [y]), y, last_or_zero (x) + 1, m - len +1), x, ls)));
+
 fill_next_line (len, m, prev, ls) := block (
   [],
   if (len = 0) then return (ls)
