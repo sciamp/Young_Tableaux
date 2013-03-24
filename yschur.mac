@@ -103,7 +103,7 @@ list_transposed_ytableaux (shape, level, m, ts) := block (
     [],
     if (level = 0) then return (list_transposed_ytableaux (shape, level + 1, m, fill_line (shape[level + 1], m, ts)))
     else block (
-      [curr, nls, nts],
+      [ts_first, nls, nts],
       if emptyp (flatten (ts)) then return ([]),
       ts_first : first (ts),
       ts : delete (ts_first, ts),
