@@ -119,6 +119,21 @@ list_transposed_ytableaux (shape, level, m, ts) := block (
       if every (lambda ([x], is (length (flatten (x)) = length (flatten (first (ts))))), ts) then level : (level + 1),
       return (list_transposed_ytableaux (shape, level, m, ts)))));
 
+/* flatten version */
+fl_list_transposed_ytableaux (shape, level, m, ts) :=
+if level < length (shape) then
+if level > 0 then
+if not emptyp (flatten (ts)) then block (
+  [nls,ts_first],
+  ts_first : first (ts),
+  ts : delete (ts_first, ts),
+  nls : fill_next_line (shape [level+1], m, rest (ts_first, - length (ts_first) + shape[level]), [[]]),
+  ts : append (ts, map (lambda ([x], append (x, ts_first)), nls)),
+  if every (lambda ([x], is (length (flatten (x)) = length (flatten (first (ts))))), ts) then level : (level + 1),
+  fl_list_transposed_ytableaux (shape, level, m, ts)) else []
+else fl_list_transposed_ytableaux (shape, level + 1, m, fl_fill_line (shape[level + 1], m, ts))
+else ts;
+
 /* Schur monomial from a tableau is the same of the one frome the transposed of that tableau */
 better_yschur_polynomial (d, m) := block (
   [ts, pol, shape],
