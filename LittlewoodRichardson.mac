@@ -1,0 +1,38 @@
+/* Copyright (C) 2013 by Alessandro Campagni */
+
+/*
+ * This file is part of YoungTableaux.                                        
+ *     YoungTableau is free software: you can redistribute it and/or modify   
+ *     it under the terms of the GNU General Public License as published by   
+ *     the Free Software Foundation, either version 3 of the License, or      
+ *     (at your option) any later version.                                    
+ *                                                                            
+ *     YoungTableaux is distributed in the hope that it will be useful,       
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of         
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the          
+ *     GNU General Public License for more details.                           
+ *                                                                            
+ *     You should have received a copy of the GNU General Public License      
+ *     along with YoungTableaux.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *
+ * Author: Alessandro Campagni <alessandro@lilik.it>
+ */
+
+/* We should check that the three diagrams are suitable for Littlewood Richardson */
+/* rev_big_shape, revsmall_shape are reversed words of diagrams */
+/* gen_skew_tab should be [], and curr should be 1 */
+generic_skew_tableau (rev_big_shape, rev_small_shape, gen_skew_tab, curr) := block (
+  [],
+  if curr <= length (rev_small_shape) then block (
+    [empty_box,zeros,infs,current_line],
+    empty_box : rev_small_shape[curr],
+    zeros : makelist (0, empty_box),
+    infs : makelist (inf, rev_big_shape[curr] - empty_box),
+    current_line : [append (zeros, infs)],
+    return (generic_skew_tableau (rev_big_shape, rev_small_shape, append (current_line, gen_skew_tab), curr + 1)))
+  else if curr <= length (rev_big_shape) then block (
+    [current_line],
+    current_line : [makelist (inf, rev_big_shape[curr])],
+    return (generic_skew_tableau (rev_big_shape, rev_small_shape, append (current_line, gen_skew_tab), curr + 1)))
+  else return (gen_skew_tab));
