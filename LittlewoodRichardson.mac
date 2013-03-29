@@ -52,9 +52,31 @@ fill_first_line (st, u) := block (
 
 /* try should be 1 */
 /* nextl should be [] */
+/* curr[i][j] is empty, we should check this before calling next_element */
 next_element (curr, u, u_ins, i, j, try, nextl) :=
 if (try <= length (u)) then block (
-  [])
+  [],
+  if (j # 1) and (i # length (curr)) then block ( /* we are neither on the left border nor or the top one */
+    [],
+    if (try > 1) then block (
+      [],
+      if (min (u[try-1] - u_ins[try-1], u[try] - u_ins[try]) > 0) then block ( /* reverse lattice word met */
+        [],
+        if (curr[i][j-1] < try) and (try < length (u) - length (curr[i]) + j) and (curr[i][j] <= curr[i+1][j]) then block ( /* tableau condition met */
+          [],
+          curr[i][j] : try,
+          return (next_element (curr, u, u_ins, i, j, try+1, append (nextl, [curr]))))
+        else return (next_element (curr, u, u_ins, i, j, try+1, nextl))) /* tableau condition not met */
+      else return (next_element (curr, u, u_ins, i, j, try+1, nextl))) /* reverse lattice word not met */
+    else block (
+      [],
+      if ((u[1] - u_ins[1]) > 0) then block ( /*reverse lattice word met */
+        [],
+        
+        )
+      )
+    )
+  )
 else return (nextl); 
 
 /* Returns a list containing the list of Littlewood-Richardson skew tableaux */
