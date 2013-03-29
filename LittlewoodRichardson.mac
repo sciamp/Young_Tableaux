@@ -43,19 +43,32 @@ generic_skew_tableau (rev_big_shape, rev_small_shape, gen_skew_tab, curr) := blo
 /* the first column should be filled with ones. */
 /* A proof of this remark is in my thesis (http://linkgoeshere). */
 /* st should be a transposed generic skew tableau, fst should be [] and level should be 1. */
-fill_first_line (st) := block (
-  [filled_skew_tableau],
+fill_first_line (st, u) := block (
+  [filled_skew_tableau, ones],
   filled_skew_tableau : copylist (st),
-  map (lambda ([x], x[1] : x[1]/inf), filled_skew_tableau),
-  return (filled_skew_tableau));
+  ones : lsum (i, i, map (lambda ([x], x[1] : x[1]/inf), filled_skew_tableau)),
+  /* we should check if there are enough ones in the content u to fill the first column! */
+  if ones <= u[1] then return ([filled_skew_tableau, ones]) else return ([]));
    
 
 /* Returns a list containing the list of Littlewood-Richardson skew tableaux */
 /* with a given shape d\e and a given content u (i.e. Littlewood-Richardson number) */
-/* d,e,u are reversed words of diagram, st should be the transposed generic skew tableau */
-/* i.e. remove_tableau_column (generic_skew_tableau (d, e, [], 1), []) */
-/* tl is the tableaux list, should be [] */
-littlewood_richardson_num (d, e, u, st, tl) := block (
-  [current_line],
-  current_line : st);
 
+/* d,e are reversed words of diagram, /*
+/* u is a reversed words of a diagram with u[1]-(second (generic_skew_tableau (d, e, [], 1), [])) */
+
+/* st should be the transposed generic skew tableau with first line filled with ones */
+/* i.e. fill_first_line (remove_tableau_column (first (generic_skew_tableau (d, e, [], 1), []))) */
+
+/* tl is the tableaux list, should be [] */
+
+/* i,j are index to move around the skew tableau like in a matrix, i sould be 1 and j 2 */
+
+/* This function should be called only if fill_first_line returns non empty list. */
+littlewood_richardson_num (d, e, u, st, tl, i, j) := block (
+  [],
+  if (i <= length (d)) and (j <= d) then block (
+    [],
+    
+    )
+  else return (tl));
