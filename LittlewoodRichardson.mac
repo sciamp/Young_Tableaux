@@ -20,7 +20,7 @@
  */
 
 /* We should check that the three diagrams are suitable for Littlewood Richardson */
-/* rev_big_shape, revsmall_shape are reversed words of diagrams */
+/* rev_big_shape, rev_small_shape are reversed words of diagrams */
 /* gen_skew_tab should be [], and curr should be 1 */
 generic_skew_tableau (rev_big_shape, rev_small_shape, gen_skew_tab, curr) := block (
   [],
@@ -36,3 +36,26 @@ generic_skew_tableau (rev_big_shape, rev_small_shape, gen_skew_tab, curr) := blo
     current_line : [makelist (inf, rev_big_shape[curr])],
     return (generic_skew_tableau (rev_big_shape, rev_small_shape, append (current_line, gen_skew_tab), curr + 1)))
   else return (gen_skew_tab));
+
+/* Remark: in filling a transposed Littlewood-Richardson skew tableau, beginning from bottom left */
+/* we must start with 1 (otherwise the corresponding word is not a lattice word, and hence the corresponding */
+/* word of the skew tableau is not a reverse lattice word). For preserving the structure of the tableau */
+/* the first column should be filled with ones. */
+/* A proof of this remark is in my thesis (http://linkgoeshere). */
+/* st should be a transposed generic skew tableau, fst should be [] and level should be 1. */
+fill_first_line (st) := block (
+  [filled_skew_tableau],
+  filled_skew_tableau : copylist (st),
+  map (lambda ([x], x[1] : x[1]/inf), filled_skew_tableau),
+  return (filled_skew_tableau));
+   
+
+/* Returns a list containing the list of Littlewood-Richardson skew tableaux */
+/* with a given shape d\e and a given content u (i.e. Littlewood-Richardson number) */
+/* d,e,u are reversed words of diagram, st should be the transposed generic skew tableau */
+/* i.e. remove_tableau_column (generic_skew_tableau (d, e, [], 1), []) */
+/* tl is the tableaux list, should be [] */
+littlewood_richardson_num (d, e, u, st, tl) := block (
+  [current_line],
+  current_line : st);
+
