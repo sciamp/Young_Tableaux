@@ -50,40 +50,16 @@ fill_first_line (st, u) := block (
   /* we should check if there are enough ones in the content u to fill the first column! */
   if ones <= u[1] then return ([filled_skew_tableau, ones]) else return ([]));
 
-/* try should be 1 */
-/* nextl should be [] */
-/* curr[i][j] is empty, we should check this before calling next_element */
-next_element (curr, u, u_ins, i, j, try, nextl) :=
-if (try <= length (u)) then block (
-  [],
-  if (j # 1) and (i # length (curr)) then block ( /* we are neither on the left border nor or the top one */
-    [],
-    if (try > 1) then block (
-      [],
-      if (min (u[try-1] - u_ins[try-1], u[try] - u_ins[try]) > 0) then block ( /* reverse lattice word met */
-        [],
-        if (curr[i][j-1] < try) and (try < length (u) - length (curr[i]) + j) and (curr[i][j] <= curr[i+1][j]) then block ( /* tableau condition met */
-          [],
-          curr[i][j] : try,
-          return (next_element (curr, u, u_ins, i, j, try+1, append (nextl, [curr]))))
-        else return (next_element (curr, u, u_ins, i, j, try+1, nextl))) /* tableau condition not met */
-      else return (next_element (curr, u, u_ins, i, j, try+1, nextl))) /* reverse lattice word not met */
-    else block (
-      [],
-      if ((u[1] - u_ins[1]) > 0) then block ( /*reverse lattice word met */
-        [],
-        
-        )
-      )
-    )
-  )
-else return (nextl); 
+reverse_lattice_word_condition (u, u_ins, try) :=
+if (try > 1) and (u[try] > u_ins[try]) and (u_ins[try] + 1 <= u_ins [try-1]) then true
+else if (try = 1) and (u[1] > u_ins[1]) then true
+else false;
 
 /* Returns a list containing the list of Littlewood-Richardson skew tableaux */
 /* with a given shape d\e and a given content u (i.e. Littlewood-Richardson number) */
 
 /* Actually d,e,u will be reversed words of transposed tableaux */
-/* d,e are reversed words of diagram, /*
+/* d,e are reversed words of diagram, */
 /* u is a reversed words of a diagram with u[1]-(second (generic_skew_tableau (d, e, [], 1), [])) */
 
 /* u_ins keeps track of which and how many letters have been used, should be makelist (0, length (u)) */
