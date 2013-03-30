@@ -55,6 +55,31 @@ if (try > 1) and (u[try] > u_ins[try]) and (u_ins[try] + 1 <= u_ins [try-1]) the
 else if (try = 1) and (u[1] > u_ins[1]) then true
 else false;
 
+/* u_len should be length (u) */
+young_tableau_condition (curr, u_len, i, j, try) :=
+if (j>1) and (i<length(curr)) and (curr[i][j-1]<try) and (try<u_len-length(curr[i])+j) and (try<=curr[i+1][j]) then true
+else if (j=1) and (i<length(curr)) and (try<u_len-length(curr[i])+j) and (try<=curr[i+1][j]) then true
+else if (j>1) and (i=length(curr)) and (curr[i][j-1]<try) and (try<u_len-length(curr[i])+j) then true
+else false;
+
+/* try should be 1 */
+/* nextl should be [] */
+/* curr[i][j] is empty, we should check this before calling next_element */
+next_element (curr, u, u_ins, i, j, try, nextl) :=
+if (try <= length (u)) then block (
+  [],
+  if reverse_lattice_word_condition (u, u_ins, try) and young_tableau_condition (curr, length (u), i, j, try) then block (
+    [nexte],
+    nexte : copylist (curr),
+    nexte[i][j] : try,
+    print ("nexte ", nexte),
+    u_ins[try] : u_ins[try] + 1,
+    print ("u_ins ", u_ins),
+    return (next_element (curr, u, u_ins, i, j, try + 1, append (nextl, [nexte]))))
+  else return (next_element (curr, u, u_ins, i, j, try + 1, nextl)))
+else return (nextl); 
+
+
 /* Returns a list containing the list of Littlewood-Richardson skew tableaux */
 /* with a given shape d\e and a given content u (i.e. Littlewood-Richardson number) */
 
