@@ -57,8 +57,8 @@ else false;
 
 /* u_len should be length (u) */
 young_tableau_condition (curr, u_len, i, j, try) :=
-if (j>1) and (i<length(curr)) and (curr[i][j-1]<try) and (try<u_len-length(curr[i])+j) and (try<=curr[i+1][j]) then true
-else if (j=1) and (i<length(curr)) and (try<u_len-length(curr[i])+j) and (try<=curr[i+1][j]) then true
+if (j>1) and (i<length(curr)) and (curr[i][j-1]<try) and (try<u_len-length(curr[i])+j)  then true
+else if (j=1) and (i<length(curr)) and (try<u_len-length(curr[i])+j) then true
 else if (j>1) and (i=length(curr)) and (curr[i][j-1]<try) and (try<u_len-length(curr[i])+j) then true
 else false;
 
