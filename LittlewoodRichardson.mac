@@ -69,46 +69,41 @@ next_element (curr, u, u_ins, i, j, try, nextl) :=
 if (try <= length (u)) then block (
   [],
   if reverse_lattice_word_condition (u, u_ins, try) and young_tableau_condition (curr, length (u), i, j, try) then block (
-    [nexte],
+    [nexte, next_u_ins],
     nexte : copylist (curr),
+    next_u_ins : copylist (u_ins),
     nexte[i][j] : try,
-    print ("nexte ", nexte),
-    u_ins[try] : u_ins[try] + 1,
-    print ("u_ins ", u_ins),
-    return (next_element (curr, u, u_ins, i, j, try + 1, append (nextl, [nexte]))))
+    next_u_ins[try] : next_u_ins[try] + 1,
+    return (next_element (curr, u, u_ins, i, j, try + 1, append (nextl, [[nexte, next_u_ins]]))))
   else return (next_element (curr, u, u_ins, i, j, try + 1, nextl)))
 else return (nextl); 
 
-
 /* Returns a list containing the list of Littlewood-Richardson skew tableaux */
 /* with a given shape d\e and a given content u (i.e. Littlewood-Richardson number) */
-
 /* Actually d,e,u will be reversed words of transposed tableaux */
 /* d,e are reversed words of diagram, */
 /* u is a reversed words of a diagram with u[1]-(second (generic_skew_tableau (d, e, [], 1), [])) */
-
 /* u_ins keeps track of which and how many letters have been used, should be makelist (0, length (u)) */
-
 /* st should be the transposed generic skew tableau with first line filled with ones */
 /* i.e. fill_first_line (remove_tableau_column (first (generic_skew_tableau (d, e, [], 1), []))) */
-
-/* tl is the tableaux list, should be [st] */
-
+/* tl is the tableaux list, should be [[st, u_ins]] */
 /* i,j are index to move around the skew tableau like in a matrix, i sould be 1 and j 2 */
-
 /* This function should be called only if fill_first_line returns non empty list. */
-littlewood_richardson_num (d, e, u, u_ins, st, tl, i, j) := block (
-  [],
-  if (i <= length (d)) and (j <= last (d)) then block (
+littlewood_richardson_num (d, e, u, st, tl, i, j) := block (
+  [curr],
+  curr : first (tl), /* curr[1] is a skew tableau, curr[2] is the crresponding u_ins */
+  if (i <= length (d)) then block (
     [],
     if (j <= length (st[i])) then block (
       [],
       /* check if we're out of skew table or st[i][j] not empty */
-      if (st[i][j] # inf) then return (littlewood_richardson_num (d, e, u, u_ins, st, tl, i, j+1))
+      /* if (st[i][j] # inf) then return (littlewood_richardson_num (d, e, u, st, tl, i, j+1)) */
+      if (curr[1][i][j] # inf) then return (littlewood_richardson_num (d, e, u, st, tl, i, j+1))
       else block (
-        [curr,next_l],
-        curr : first (tl),
+        [next_l],
         tl : delete (curr, tl),
-        next_l : next_element (curr, u, u_ins, i, j, 1, [])))
-    else return (littlewood_richardson_num (d, e, u, u_ins, st, tl, i+1, 1))) /* end of line, go to next */
+        next_l : next_element (curr[1], u, curr[2], i, j, 1, []),
+        tl : append (tl, next_l),
+        return (littlewood_richardson_num (d, e, u, st, tl, i, j))))
+    else return (littlewood_richardson_num (d, e, u, st, tl, i+1, 1))) /* end of line, go to next */
   else return (tl));
