@@ -4,3 +4,4 @@ load (yshape);
 load (ydiagram);
 load (ytableau);
 load (yschur);
+load (LittlewoodRichardson);
