@@ -57,9 +57,11 @@ else false;
 
 /* u_len should be length (u) */
 young_tableau_condition (curr, u_len, i, j, try) :=
-if (j>1) and (i<length(curr)) and (curr[i][j-1]<try) and (try<=u_len-length(curr[i])+j)  then true
-else if (j=1) and (i<length(curr)) and (try<u_len-length(curr[i])+j) then true
-else if (j>1) and (i=length(curr)) and (curr[i][j-1]<try) and (try<=u_len-length(curr[i])+j) then true
+if ((i>1) and (length(curr[i-1])>=j) and (try<=curr[i-1][j])) or ((i>1) and (length(curr[i-1])<j)) or (i=1) then block (
+  if (j>1) and (i<length(curr)) and (curr[i][j-1]<try) and (try<=u_len-length(curr[i])+j) then true
+  else if (j=1) and (i<length(curr)) and (try<u_len-length(curr[i])+j) then true
+  else if (j>1) and (i=length(curr)) and (curr[i][j-1]<try) and (try<=u_len-length(curr[i])+j) then true
+  else false)
 else false;
 
 /* try should be 1 */
@@ -96,8 +98,6 @@ littlewood_richardson_num (d, e, u, tl, i, j) := block (
     curr : first (tl), /* curr[1] is a skew tableau, curr[2] is the crresponding u_ins */
     if (j <= length (curr[1][i])) then block (
       [],
-      /* check if we're out of skew table or st[i][j] not empty */
-      /* if (st[i][j] # inf) then return (littlewood_richardson_num (d, e, u, st, tl, i, j+1)) */
       if (curr[1][i][j] # inf) then return (littlewood_richardson_num (d, e, u, tl, i, j+1))
       else block (
         [next_l],
