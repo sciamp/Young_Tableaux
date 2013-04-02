@@ -32,3 +32,30 @@ if (ydiagramp (d) and ytableaup (t)) then block (
   if (length (t@word) = length (d@rows)) and (t@word li= d@rows) then ret : true,
   return (ret))
 else false;
+
+/* each time this function is called it attaches only one box in every */
+/* possible position of the current diagram */
+/* level should be 1 */
+/* nextl should be [] */
+attach_box (shape, ins, level, nextl) :=
+if (ins > 0) then block (
+  [],
+  if (level <= length (shape)) then block (
+    [],
+    if (level > 1) then block (
+      [],
+      if (shape[level - 1] > shape[level]) then block ( /* we can attach at this level */
+        [curr],
+        curr : [copylist (shape), ins - 1],
+        curr[1][level] : shape[level] + 1,
+        nextl : append (nextl, [curr])),
+      return (attach_box (shape, ins, level + 1, nextl)))
+    else block (
+      [curr],
+      curr : [copylist (shape), ins - 1],
+      curr[1][1] : shape[1] + 1,
+      return (attach_box (shape, ins, level + 1, append (nextl, [curr])))))
+  else if (level = length (shape) + 1) then return (
+    attach_box (shape, ins, level + 1, append (nextl, [[append (shape, [1]), ins - 1]])))
+  else return (nextl))
+else nextl;
