@@ -34,7 +34,7 @@ if (ydiagramp (d) and ytableaup (t)) then block (
 else false;
 
 /* returns the number of boxes in a diagram */
-yshapesize (U) := sum (U@word[i], i, 1, length (U@word));
+yshapesize (U) := sum (U@rows[i], i, 1, length (U@rows));
 
 /* each time this function is called it attaches only one box in every */
 /* possible position of the current diagram */
