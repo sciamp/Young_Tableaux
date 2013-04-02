@@ -62,3 +62,21 @@ if (ins > 0) then block (
     attach_box (shape, ins, level + 1, append (nextl, [[append (shape, [1]), ins - 1]])))
   else return (nextl))
 else nextl;
+
+/* given two words of two diagrams e and u, returns a list with all possible */
+/* diagrams d fitting V=TU where V is a tableaux of shape d, T and U are tableaux */
+/* of shape e and u respectively, and containing e. */
+/* ds should be [[e,yshapesize(u)]] */
+/* e is a reversed words */
+/* u_size should be yshapesize (u) */
+/* size should be the size of d (i.e. the sum of the sizes of e and u), we can do this */
+/* with sum(e[i],i,1,length(e))+sum(u[i],i,1,length(u)) */
+yshape_product (e, u_size, ds) :=
+if (not every (lambda ([x], is (x[2] = 0)), ds)) then block (
+  [curr,nextl],
+  curr : first (ds),      /* we can use pop from */
+  ds : delete (curr, ds), /* basic.mac instead. */
+  nextl : attach_box (curr[1], curr[2], 1, []),
+  ds : append (ds, nextl),
+  return (yshape_product (e, u_size, ds)))
+else ds; /* we're done */
