@@ -93,7 +93,7 @@ else return (nextl);
 /* This function should be called only if fill_first_line returns non empty list. */
 littlewood_richardson_num (d, e, u, tl, i, j) := block (
   [],
-  if (i <= length (d)) then block (
+  if (i <= length (d)) and (not emptyp (tl)) then block (
     [curr],
     curr : first (tl), /* curr[1] is a skew tableau, curr[2] is the crresponding u_ins */
     if (j <= length (curr[1][i])) then block (
