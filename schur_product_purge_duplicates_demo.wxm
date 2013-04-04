@@ -106,15 +106,19 @@ polyU : fl_better_yschur_polynomial (U,6);
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-prod : expand (polyE*polyU);
+prod : ratsimp (polyE*polyU);
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-is (prod = prod_lr);
+prod_lr_s : ratsimp (prod_lr);
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
-prod - prod_lr;
+is (expand (prod - prod_lr = 0));
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ratsimp ( expand (prod - prod_lr));
 /* [wxMaxima: input   end   ] */
 
 /* [wxMaxima: input   start ] */
