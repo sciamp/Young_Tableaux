@@ -49,11 +49,15 @@ else block (
   r : delete (0, r),
   return (remove_diagram_column (r, l)));
 
+/* D is a Young diagram */
 ydiagram_transpose (D) := block (
   [l,r],
   r : D@rows,
   l : remove_diagram_column (r, []),
   return (new_ydiagram_safe (l)));
+
+/* d should be the (new_ydiagram_safe (d))@rows */
+ydiagram_transpose_rows (d) := remove_diagram_column (d, []);
 
 ydiagram_size (d) := block (
   [size],
