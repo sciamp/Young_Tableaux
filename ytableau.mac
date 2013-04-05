@@ -80,6 +80,35 @@ ytableau_bump (T, x) := block (
     T@word : push ([x], w)),
   return (T));
 
+/* rb should be [r, x] where x is the element that is being bumped */
+/* in the row r */
+/* i should be length (r) */
+/* rec_bump_row returns [bumped_row, next_x] or [append (r,[x]), 0]  */
+rec_bump_row (r, x, i) :=
+if (x >= last (r)) then [append (r, [x]), 0] /* r[i] <= r[i+1] */
+else if (x < r[i]) then rec_bump_row (r, x, i-1)
+else block (
+  [next_x],
+  next_x : r[i+1],
+  r[i+1] : x,
+  return ([r, next_x]));
+
+/* t should be T@word */
+/* i should be length (t) */
+rec_ytableau_word_bump (t, x, i) :=
+if (x > 0) then block (
+  [],
+  if (i > 0) then block (
+    [next_b],
+    next_b : rec_bump_row (t[i], x, length (t[i])),
+    t[i] : next_b[1],
+    return (rec_ytableau_word_bump (t, next_b[2], i-1)))
+  else return (append ([[x]], t)))
+else t;
+
+/* T should be a tableau, x a positive integer */
+recursive_ytableau_bump (T, x) := new (ytableau (rec_ytableau_word_bump (T@word, x, length (T@word))));
+
 ytableaux_product (T,U) := block (
   /* WARNING! R : T creates a reference to T, not a copy! */
   R : new (ytableau (copylist (T@word))), /* we return a new tableau R = T*U */
