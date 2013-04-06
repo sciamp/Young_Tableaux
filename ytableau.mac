@@ -86,7 +86,7 @@ ytableau_bump (T, x) := block (
 /* rec_bump_row returns [bumped_row, next_x] or [append (r,[x]), 0]  */
 rec_bump_row (r, x, i) :=
 if (x >= last (r)) then [append (r, [x]), 0] /* r[i] <= r[i+1] */
-else if (x < r[i]) then rec_bump_row (r, x, i-1)
+else if ((i > 0) and (x < r[i])) then rec_bump_row (r, x, i-1)
 else block (
   [next_x],
   next_x : r[i+1],
