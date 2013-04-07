@@ -141,17 +141,22 @@ if ((i > 1) and (j < length (s[i])) and (j <= length (s[i-1]))) then block ( /* 
     s[i][j] : s[i-1][j],
     s[i-1][j] : 0,
     return (jeu_de_taquin (s, i-1, j))))
-else  if (((i > 1) and (j = length (s[i])) and (j > length (s[i-1]))) or ((i = 1) and (j = length (s[1])))) then block ( /* outside corner */
+else if (((i > 1) and (j = length (s[i])) and (j > length (s[i-1]))) or ((i = 1) and (j = length (s[1])))) then block ( /* outside corner */
   s[i] : rest (s[i], -1),
+  if (emptyp (s[i])) then s : delete ([], s),
   return (s))
 else if ((i > 1) and (j = length (s[i])) and (j = length (s[i-1]))) then block (
   s[i][j] : s[i-1][j],
   s[i-1][j] : 0,
   return (jeu_de_taquin (s, i-1, j)))
 else if ((i = 1) and (j < length (s[1]))) then block (
-    s[1][j] : s[1][j+1],
-    s[1][j+1] : 0,
-    return (jeu_de_taquin (s, 1, j+1)));
+  s[1][j] : s[1][j+1],
+  s[1][j+1] : 0,
+  return (jeu_de_taquin (s, 1, j+1)))
+else if ((i > 1) and (j > length (s[i-1]))) then block (
+  s[i] : append (makelist (s[i][k], k, 1, j-1), makelist (s[i][k], k, j+1, length (s[i]))),
+  if (emptyp (s[i])) then s : delete ([], s),
+  return (s));
 
 ytableaux_product (T,U) := block (
   /* WARNING! R : T creates a reference to T, not a copy! */
