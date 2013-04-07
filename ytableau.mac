@@ -158,6 +158,21 @@ else if ((i > 1) and (j > length (s[i-1]))) then block (
   if (emptyp (s[i])) then s : delete ([], s),
   return (s));
 
+/* s should be a skew tableau word */
+rect (s) := block (
+  [corner],
+  corner : next_inner_corner (s, length (s), 1, 1),
+  if (corner = false) then return (s)
+  else return (rect (jeu_de_taquin (s, corner[1], corner[2]))));
+
+/* t and u should be tableau words */
+prod_rect_word (t, u) := block (
+  [t_width, u_height, zeros],
+  t_width : length (last (t)),
+  u_height : length (u),
+  zeros : makelist (0, i, 1, t_width),
+  return (rect (append (t, map (lambda ([x], append (zeros, x)), u))))); 
+
 ytableaux_product (T,U) := block (
   /* WARNING! R : T creates a reference to T, not a copy! */
   R : new (ytableau (copylist (T@word))), /* we return a new tableau R = T*U */
