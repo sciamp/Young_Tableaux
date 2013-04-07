@@ -109,6 +109,12 @@ else t;
 /* T should be a tableau, x a positive integer */
 recursive_ytableau_bump (T, x) := new (ytableau (rec_ytableau_word_bump (T@word, x, length (T@word))));
 
+/* (i,j) should be (1,1) */
+rec_ytableau_word_prod (t, u, u_len, i, j) :=
+if ((i <= u_len) and (j <= length (u[i]))) then rec_ytableau_word_prod (
+  rec_ytableau_word_bump (t, u[i][j], length (t)), u, u_len, i, j+1)
+else if ((i <= u_len) and (j > length (u[i]))) then rec_ytableau_word_prod (t, u, u_len, i+1, 1)
+else t;
 ytableaux_product (T,U) := block (
   /* WARNING! R : T creates a reference to T, not a copy! */
   R : new (ytableau (copylist (T@word))), /* we return a new tableau R = T*U */
