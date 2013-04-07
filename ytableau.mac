@@ -115,6 +115,20 @@ if ((i <= u_len) and (j <= length (u[i]))) then rec_ytableau_word_prod (
   rec_ytableau_word_bump (t, u[i][j], length (t)), u, u_len, i, j+1)
 else if ((i <= u_len) and (j > length (u[i]))) then rec_ytableau_word_prod (t, u, u_len, i+1, 1)
 else t;
+
+/* s should be the word of a skew tableau */
+/* s_len should be length(s) */
+/* (i,j) should be (1,1) unless YOU KNOW WHAT YOU'RE DOING! */
+next_inner_corner (s, s_len, i, j) :=
+if (i <= s_len) then block (
+  [],
+  if (s[i][1] > 0) then return (next_inner_corner (s, s_len, i+1, 1)) /* no inner corner in this line */
+  else if (j < length (s[i]) and s[i][j+1] > 0) then return ([i, j]) /* we got an inner corner */
+  else if (j < length (s[i]) and s[i][j+1] = 0) then return (next_inner_corner (s, s_len, i, j+1))
+  else if (j = length (s[i])) then return (false)) /* s[i] is filled only with zeros, */
+                                                  /* hence there are no more inner corner */
+else false; /* no inner corner in s */
+
 ytableaux_product (T,U) := block (
   /* WARNING! R : T creates a reference to T, not a copy! */
   R : new (ytableau (copylist (T@word))), /* we return a new tableau R = T*U */
