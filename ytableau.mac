@@ -144,6 +144,10 @@ if ((i > 1) and (j < length (s[i])) and (j <= length (s[i-1]))) then block ( /* 
 else  if (((i > 1) and (j = length (s[i])) and (j > length (s[i-1]))) or ((i = 1) and (j = length (s[1])))) then block ( /* outside corner */
   s[i] : rest (s[i], -1),
   return (s))
+else if ((i > 1) and (j = length (s[i])) and (j = length (s[i-1]))) then block (
+  s[i][j] : s[i-1][j],
+  s[i-1][j] : 0,
+  return (jeu_de_taquin (s, i-1, j)))
 else if ((i = 1) and (j < length (s[1]))) then block (
     s[1][j] : s[1][j+1],
     s[1][j+1] : 0,
