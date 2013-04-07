@@ -129,6 +129,26 @@ if (i <= s_len) then block (
                                                   /* hence there are no more inner corner */
 else false; /* no inner corner in s */
 
+/* s should be a skew tableau */
+/* (i,j) should be next_inner_corner (s, s_len, 1, 1) */
+jeu_de_taquin (s, i, j) :=
+if ((i > 1) and (j < length (s[i])) and (j <= length (s[i-1]))) then block ( /* we're not on the border */
+  if (s[i][j+1] < s[i-1][j]) then block ( /* slide to the rigth */
+    s[i][j] : s[i][j+1],
+    s[i][j+1] : 0,
+    return (jeu_de_taquin (s, i, j+1)))
+  else block ( /* slide below */
+    s[i][j] : s[i-1][j],
+    s[i-1][j] : 0,
+    return (jeu_de_taquin (s, i-1, j))))
+else  if (((i > 1) and (j = length (s[i])) and (j > length (s[i-1]))) or ((i = 1) and (j = length (s[1])))) then block ( /* outside corner */
+  s[i] : rest (s[i], -1),
+  return (s))
+else if ((i = 1) and (j < length (s[1]))) then block (
+    s[1][j] : s[1][j+1],
+    s[1][j+1] : 0,
+    return (jeu_de_taquin (s, 1, j+1)));
+
 ytableaux_product (T,U) := block (
   /* WARNING! R : T creates a reference to T, not a copy! */
   R : new (ytableau (copylist (T@word))), /* we return a new tableau R = T*U */
