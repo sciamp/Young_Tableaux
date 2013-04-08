@@ -61,6 +61,22 @@ if listp (t@word) then block (
   if listp (w) then return (true))
 else false;
 
+/* l should be a tableau word, if given as a string */
+/* as i'm not always in the mood of entering a list of integers! */
+/* should be map ('parse_string, charlist ("5644623551223")) */
+ytableau_from_word (l,t) :=
+if ((not emptyp (l)) and (not emptyp (t))) then block (
+  if (last (t[1])) <= l[1] then block (
+    t[1] : append (t[1], [l[1]]),
+    return (ytableau_from_word (rest (l, 1), t)))
+  else block (
+    t : append ([[l[1]]], t),
+    return (ytableau_from_word (rest (l, 1), t))))
+else if (not emptyp (l)) then block (
+  t : [[l[1]]],
+  return (ytableau_from_word (rest (l, 1), t)))
+else reverse (t);
+
 ytableau_bump (T, x) := block (
   appended : false,
   for i : length (T@word) step -1 while (i > 0 and not appended) do block (
