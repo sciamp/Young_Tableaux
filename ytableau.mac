@@ -79,6 +79,7 @@ else reverse (t);
 
 /* we could use flatten, this is the implementation */
 /* of the algorithm from W.Fulton 'Young Tableaux' */
+/* l should be [], t is a tableau word */
 word_from_ytableau (l, t) :=
 if (not emptyp (t)) then word_from_ytableau (append (l, t[1]), rest (t, 1))
 else l;
