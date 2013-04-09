@@ -1,0 +1,51 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 12.09.0 ] */
+
+/* [wxMaxima: input   start ] */
+file_search_maxima : cons(sconcat("/home/sciamp/Sources/tesi/Young_Tableaux/###.{lisp,mac,mc}"), file_search_maxima)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+load (young)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+E:new_ydiagram_safe ([5,4,2,1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+U:new_ydiagram_safe ([5,2,1,1]);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ds:yschur_polynomial_product (E,U)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+ds:unique(ds);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+e:reverse(E@rows)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+u:reverse (U@rows)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+skews:map (lambda ([x], fill_first_line (remove_tableau_column (generic_skew_tableau (x[1], e, [], 1),[]), u)), ds);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+l1:map (lambda ([x], if (not emptyp (skews[x])) then 
+        [ds[x][1],length (littlewood_richardson_num (d, e, u,[[skews[x][1],append([skews[x][2]],makelist(0,length (u)-1))]],1,2))]),
+    makelist (i,i,1,length (skews)))$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+l2 : delete (false, map (lambda ([x], if (listp (x)) and (x[2] > 0) then x ), l1));
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$

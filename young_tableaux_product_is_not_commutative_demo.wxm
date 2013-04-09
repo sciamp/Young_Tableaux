@@ -1,0 +1,101 @@
+/* [wxMaxima batch file version 1] [ DO NOT EDIT BY HAND! ]*/
+/* [ Created with wxMaxima version 12.09.0 ] */
+
+/* [wxMaxima: input   start ] */
+file_search_maxima : cons(sconcat("/home/sciamp/Sources/tesi/Young_Tableaux/###.{lisp,mac,mc}"), file_search_maxima)$
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+load (young);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+t:[[5,6],[4,4,6],[2,3,5,5],[1,2,2,3]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+u:[[2],[1,3]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+rec_ytableau_word_prod (copylist (t), copylist (u), length (u), 1, 1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+rec_ytableau_word_prod (copylist (u), copylist (t), length (t), 1, 1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+a : [[3]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+b : [[2]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+rec_ytableau_word_prod (copylist (a), copylist (b), length (b), 1, 1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+rec_ytableau_word_prod (copylist (b), copylist (a), length (a), 1, 1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+572;
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+t:[[5,6],[4,4,6],[2,3,5,5],[1,2,2,3]];u:[[2],[1,3]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+prod_rect_word (t,u);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s:[[5,6],[4,4,6],[2,3,5,5],[1,2,2,3],[0,0,0,0,2],[0,0,0,0,1,3]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s:jeu_de_taquin (s, 5, 4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s:jeu_de_taquin (s, 5, 3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s:jeu_de_taquin (s, 5, 2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s:jeu_de_taquin (s, 5, 1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s:jeu_de_taquin (s, 5, 4);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s:jeu_de_taquin (s, 5, 3);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s:jeu_de_taquin (s, 5, 2);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+s:jeu_de_taquin (s, 5, 1);
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+t:[[5,6],[4,4,6],[2,3,5,5],[1,2,2,3]];u:[[2],[1,3]];
+/* [wxMaxima: input   end   ] */
+
+/* [wxMaxima: input   start ] */
+rec_ytableau_word_prod (copylist (t), copylist (u), length (u), 1, 1);
+/* [wxMaxima: input   end   ] */
+
+/* Maxima can't load/batch files which end with a comment! */
+"Created with wxMaxima"$
